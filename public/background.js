@@ -6,3 +6,10 @@
 //     height: 600
 //   });
 // });
+
+chrome.runtime.onConnect.addListener(function (port) {
+  console.log(`${port} connected`);
+  port.onMessage.addListener(function (message, sender) {
+    console.log(message.msg);
+  });
+});
