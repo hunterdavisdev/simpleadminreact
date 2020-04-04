@@ -7,8 +7,8 @@
 //   });
 // });
 
-const MESSAGE_QUERY = "MESSAGE_QUERY";
-const MESSAGE_RESULTS = "MESSAGE_RESULTS";
+const MESSAGE_QUERY = 'MESSAGE_QUERY';
+const MESSAGE_RESULTS = 'MESSAGE_RESULTS';
 
 // const content_port = chrome.runtime.connect({ name: "sccrm_content" });
 // const popup_port = chrome.runtime.connect({ name: "sccrm_popup" });
