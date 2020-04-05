@@ -16,6 +16,8 @@ html {
 }
 
 body {
+  width: 500px;
+  height: 350px;
   margin: 0;
   font-family: 'Karla', sans-serif !important;
   -webkit-font-smoothing: antialiased;

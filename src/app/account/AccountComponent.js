@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Account = () => {
+const AccountComponent = () => {
   return <p> Account component </p>;
 };
 
-export default Account;
+export default AccountComponent;
