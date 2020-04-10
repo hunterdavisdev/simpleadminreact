@@ -9,16 +9,42 @@ const options = [
   { key: 'Domain', text: 'Domain', value: 'Domain' },
 ];
 const SearchComponent = () => {
-  const [query, setQuery] = React.useState('');
-  const [key, setKey] = React.useState('Name');
+  // const [query, setQuery] = React.useState('');
+  // const [key, setKey] = React.useState('Name');
+  const [payload, setPayload] = React.useState({
+    key: 'name',
+    value: '',
+  });
   const [results, setResults] = React.useState([]);
+  const [activeTab, setActiveTab] = React.useState(null);
 
   const handleChange = (e) => {
-    setQuery(e.target.value);
+    setPayload({
+      ...payload,
+      query: e.target.value,
+    });
+    chrome.tabs.sendMessage(
+      activeTab,
+      {
+        payload: {
+          type: 'MESSAGE_QUERY',
+          ...payload,
+        },
+      },
+      (response) => {
+        if (!checkLastRuntimeError()) {
+          setResults(response.payload.results);
+        }
+      }
+    );
   };
 
   const handleDropdownChange = (e) => {
-    setKey(e.target.key);
+    console.log(e);
+    setPayload({
+      key: e.target.key,
+      ...payload,
+    });
   };
 
   const handleImageClick = ({ name, url, icon }) => {
@@ -36,26 +62,30 @@ const SearchComponent = () => {
     });
   };
 
-  React.useEffect(() => {
-    if (query.length > 0) {
-      chrome.tabs.query({ url: '*://admin.simplechurchcrm.com/*' }, function (tabs) {
-        chrome.tabs.sendMessage(
-          tabs[0].id,
-          {
-            type: 'MESSAGE_QUERY',
-            payload: {
-              key,
-              query,
-            },
-          },
-          function (response) {
-            console.log(response);
-            setResults(response.payload.results);
-          }
-        );
-      });
+  const checkLastRuntimeError = () => {
+    const errorExists = chrome.runtime.lastError;
+    if (errorExists) {
+      var errorMsg = chrome.runtime.lastError.message;
+      console.error(errorMsg);
     }
-  }, [query]);
+    return errorExists;
+  };
+
+  React.useEffect(() => {
+    chrome.tabs.query(
+      {
+        url: ['*://admin.simplechurchcrm.com/', '*://admin.simplechurchcrm.com/main/*'],
+      },
+      (tabs) => {
+        if (!checkLastRuntimeError()) {
+          if (tabs && tabs.length > 0) {
+            setActiveTab(tabs[0].id);
+            console.log(activeTab);
+          }
+        }
+      }
+    );
+  }, []);
 
   return (
     <Container style={{ margin: '0' }}>
@@ -63,20 +93,20 @@ const SearchComponent = () => {
         fluid
         size='small'
         loading
+        labelPosition='left'
+        placeholder='Start typing'
+        onChange={handleChange}
+        value={payload.query}
         label={
           <Dropdown
             size='small'
             inverted
             defaultValue='Name'
             options={options}
-            value={key}
+            value={payload.key}
             onChange={handleDropdownChange}
           />
         }
-        labelPosition='left'
-        placeholder='Start typing'
-        onChange={handleChange}
-        value={query}
       />
       <List celled size='tiny' style={{ height: '250px', overflowY: 'auto' }}>
         {results.map((result) => (

@@ -2,32 +2,16 @@ console.log('Content script injected...');
 const MESSAGE_QUERY = 'MESSAGE_QUERY';
 const MESSAGE_RESULTS = 'MESSAGE_RESULTS';
 
-// var port = chrome.runtime.connect({ name: "sccrm_content" });
-// port.onMessage.addListener(function(message, sender) {
-//   switch (message.type) {
-//     case MESSAGE_QUERY:
-//       let results = evalQuery(message.payload);
-//       port.postMessage({
-//         type: MESSAGE_RESULTS,
-//         payload: {
-//           results: results
-//         }
-//       });
-//     default:
-//       break;
-//   }
-// });
-
-const evalQuery = ({ key, query }) => {
-  switch (key.toLowerCase()) {
+const evalQuery = ({ key, value }) => {
+  switch (key) {
     case 'id':
-      return findChurchById(Number(query));
+      return findChurchById(Number(value));
     case 'domain':
-      return findChurchByDomain(query.toLowerCase());
+      return findChurchByDomain(value.toLowerCase());
     case 'name':
-      return findChurchesByName(query.toLowerCase());
+      return findChurchesByName(value.toLowerCase());
     case 'email:':
-      return findChurchesByEmail(query.toLowerCase());
+      return findChurchesByEmail(value.toLowerCase());
     default:
       return [];
   }
@@ -75,11 +59,6 @@ const findChurchesByEmail = (email) =>
 const findChurchById = (id) => churches.filter((church) => church.id === id);
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  // console.log(
-  //   sender.tab
-  //     ? "from a content script:" + sender.tab.url
-  //     : "from the extension"
-  // );
   console.log(request);
   if (request.type === MESSAGE_QUERY)
     sendResponse({
