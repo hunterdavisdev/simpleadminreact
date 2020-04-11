@@ -19,7 +19,7 @@ const App = () => {
     <div className='App'>
       <Router>
         <Grid style={{ height: '100vh', margin: 0 }}>
-          <Grid.Row style={{ height: '12%', padding: 0, background: '#583bef' }}>
+          <Grid.Row style={{ height: '18%', padding: 0, background: '#583bef' }}>
             <Grid.Column width={5} style={columnHeaderStyle}>
               <Header inverted as='h3'>
                 Simple Admin
@@ -29,7 +29,7 @@ const App = () => {
               <ActiveUrlDisplay />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row style={{ height: '88%', padding: 0 }}>
+          <Grid.Row style={{ height: '82%', padding: 0 }}>
             <Grid.Column width={5}>
               <Navbar style={{ paddingTop: '1.5em' }} />
             </Grid.Column>

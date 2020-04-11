@@ -32,7 +32,7 @@ const HistoryComponent = () => {
           <p> History data is not live and some functionality may be disabled.</p>
         </React.Fragment>
       ) : null}
-      <List celled size='small' relaxed>
+      <List size='tiny' style={{ height: '250px', overflowY: 'auto' }}>
         {history.map((entry) => (
           <List.Item>
             <Image

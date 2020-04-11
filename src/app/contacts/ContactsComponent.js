@@ -1,11 +1,22 @@
 import React from 'react';
-import { Container, Search, List } from 'semantic-ui-react';
+import { Container, List, Label } from 'semantic-ui-react';
+import contacts from './contacts';
 
 const ContactsComponent = () => {
   return (
     <Container>
-      <Search></Search>
-      <List></List>
+      <List size='tiny' divided>
+        {contacts.map((contact) => (
+          <List.Item>
+            {contact.name}
+            {contact.departments.map((department) => (
+              <Label horizontal onClick={() => alert('Text copied to clipboard')}>
+                {department.name}
+              </Label>
+            ))}
+          </List.Item>
+        ))}
+      </List>
     </Container>
   );
 };

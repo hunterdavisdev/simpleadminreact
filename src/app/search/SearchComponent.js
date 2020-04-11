@@ -1,16 +1,15 @@
 /*global chrome*/
 import React from 'react';
-import { Dropdown, Container, Input, List, Button, Image } from 'semantic-ui-react';
+import { Dropdown, Container, Input, List, Button, Image, Label } from 'semantic-ui-react';
+import { FiEdit2 } from 'react-icons/fi';
 
 const options = [
-  { key: 'Name', text: 'Name', value: 'Name' },
-  { key: 'ID', text: 'ID', value: 'ID' },
-  { key: 'Email', text: 'Email', value: 'Email' },
-  { key: 'Domain', text: 'Domain', value: 'Domain' },
+  { key: 'name', text: 'Name', value: 'name' },
+  { key: 'id', text: 'ID', value: 'id' },
+  { key: 'email', text: 'Email', value: 'email' },
+  { key: 'domain', text: 'Domain', value: 'domain' },
 ];
 const SearchComponent = () => {
-  // const [query, setQuery] = React.useState('');
-  // const [key, setKey] = React.useState('Name');
   const [payload, setPayload] = React.useState({
     key: 'name',
     value: '',
@@ -21,13 +20,13 @@ const SearchComponent = () => {
   const handleChange = (e) => {
     setPayload({
       ...payload,
-      query: e.target.value,
+      value: e.target.value,
     });
     chrome.tabs.sendMessage(
       activeTab,
       {
+        type: 'MESSAGE_QUERY',
         payload: {
-          type: 'MESSAGE_QUERY',
           ...payload,
         },
       },
@@ -58,6 +57,7 @@ const SearchComponent = () => {
       });
       chrome.storage.local.set({ sa_history: currentHistory }, () => {
         console.log('Updated history: ' + currentHistory);
+        window.open(url, '_blank');
       });
     });
   };
@@ -96,7 +96,7 @@ const SearchComponent = () => {
         labelPosition='left'
         placeholder='Start typing'
         onChange={handleChange}
-        value={payload.query}
+        value={payload.value}
         label={
           <Dropdown
             size='small'
@@ -108,9 +108,14 @@ const SearchComponent = () => {
           />
         }
       />
-      <List celled size='tiny' style={{ height: '250px', overflowY: 'auto' }}>
+      <List selection size='mini' style={{ height: '275px', overflowY: 'auto', padding: '1em' }}>
         {results.map((result) => (
           <List.Item>
+            <List.Content floated='right'>
+              <Label onClick={() => window.open(`https://admin.simplechurchcrm.com/manage/edit/${result.id}`)}>
+                <FiEdit2 />
+              </Label>
+            </List.Content>
             <Image
               src={result.icon}
               onClick={() => handleImageClick(result)}
@@ -120,9 +125,7 @@ const SearchComponent = () => {
                 height: '16px',
               }}
             />
-            <List.Content verticalAlign='middle'>
-              {result.name.length > 45 ? `${result.name.slice(0, 45)}...` : result.name}
-            </List.Content>
+            <List.Content>{result.name.length > 45 ? `${result.name.slice(0, 45)}...` : result.name}</List.Content>
           </List.Item>
         ))}
       </List>

@@ -22,3 +22,12 @@ chrome.tabs.onActivated.addListener(({ tabId, windowId }) => {
     console.log(currentUrl);
   });
 });
+
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === 'install') {
+    console.log('Installed');
+  } else if (details.reason === 'update') {
+    console.log(chrome.storage.local);
+    console.log('Updated');
+  }
+});

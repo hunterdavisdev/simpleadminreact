@@ -1,12 +1,3 @@
-const dates = [
-  Date.now(),
-  new Date('2020-04-09').getTime(),
-  new Date('2020-04-02').getTime(),
-  new Date('2020-01-28').getTime(),
-  new Date('2018-07-02').getTime(),
-  new Date('2016-04-09').getTime(),
-];
-
 export default [
   {
     name: "Eagle's Landing First Baptist Church",

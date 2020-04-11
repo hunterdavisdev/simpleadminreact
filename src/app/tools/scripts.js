@@ -1,20 +1,20 @@
-import axios from "axios";
+import axios from 'axios';
 
-exports.reindexSearch = async accountUrl => {
+export const reindexSearch = async (accountUrl) => {
   try {
     await axios.get(`${accountUrl}/internal/delete_all_members`);
     await axios.get(`${accountUrl}/internal/import_all_members`);
-    alert("Done!");
+    alert('Done!');
   } catch (err) {
     console.error(err.message);
   }
 };
 
-exports.fixDuplicateFamilies = async accountUrl => {
+export const fixDuplicateFamilies = async (accountUrl) => {
   try {
     await axios.get(`${accountUrl}/internal/fixduplicatefamily`);
     await axios.get(`${accountUrl}/internal/fixduplicatefamily`);
-    alert("Done!");
+    alert('Done!');
   } catch (err) {
     console.error(err.message);
   }
@@ -23,19 +23,19 @@ exports.fixDuplicateFamilies = async accountUrl => {
 /**
  * TODO: Pull the number of gifts associated out of the html response
  */
-exports.associateGiving = async accountUrl => {
+export const associateGiving = async (accountUrl) => {
   try {
     await axios.get(`${accountUrl}/internal/asscociate_gifts_with_pledges`);
-    alert("Done!");
+    alert('Done!');
   } catch (err) {
     console.error(err.message);
   }
 };
 
-exports.fixLastAttendedDate = async accountUrl => {
+export const fixLastAttendedDate = async (accountUrl) => {
   try {
     await axios.get(`${accountUrl}/internal/fixlastattendeddate`);
-    alert("Done!");
+    alert('Done!');
   } catch (err) {
     console.error(err.message);
   }
