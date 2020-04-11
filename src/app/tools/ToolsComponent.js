@@ -1,55 +1,69 @@
-import React from 'react';
-// import { Menu, Confirm } from 'semantic-ui-react';
-import { Menu, Modal, Header, Button, Icon } from 'semantic-ui-react';
-import { FiTerminal } from 'react-icons/fi';
+import React from "react";
+import { Menu } from "semantic-ui-react";
+import ConfirmationModal from "../common/ConfirmationModal";
+import { FiTerminal } from "react-icons/fi";
+import {
+  reindexSearch,
+  fixDuplicateFamilies,
+  associateGiving,
+  fixLastAttendedDate
+} from "./scripts";
 
 const fragmentIcon = (FaIcon, title) => (
   <p>
-    <FaIcon style={{ marginRight: '1em' }} />
+    <FaIcon style={{ marginRight: "1em" }} />
     {title}
   </p>
 );
 
+const options = [
+  {
+    name: "search",
+    text: "Re-index search",
+    script: reindexSearch
+  },
+  {
+    name: "families",
+    text: "Fix duplicate families",
+    script: fixDuplicateFamilies
+  },
+  {
+    name: "giving",
+    text: "Associate giving with pledges",
+    script: associateGiving
+  },
+  {
+    name: "date",
+    text: "Fix last attended date",
+    script: fixLastAttendedDate
+  }
+];
+
 const ToolsComponent = () => {
-  const [isOpen, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const handleCancel = () => setOpen(false);
-  const handleConfirm = () => setOpen(false);
+  const [visible, setVisible] = React.useState(false);
+  const [activeScript, setScript] = React.useState();
+  const handleClose = () => setVisible(false);
+  const handleCancel = () => setVisible(false);
+  const handleConfirm = () => {
+    setVisible(false);
+  };
 
   return (
     <React.Fragment>
-      {/* <Confirm open={isOpen} onCancel={handleCancel} onConfirm={handleConfirm} style={{ width: '50%' }} /> */}
-      <Modal basic size='mini' open={isOpen} onClose={handleClose} style={{ width: '85%' }}>
-        <Header content='Run script' />
-        <Modal.Content>
-          <p>Are you sure you want to run SCRIPT_NAME for CHURCH_NAME?</p>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button basic color='red' onClick={handleConfirm} inverted>
-            <Icon name='remove' /> No
-          </Button>
-          <Button basic color='green' onClick={handleCancel} inverted>
-            <Icon name='checkmark' /> Yes
-          </Button>
-        </Modal.Actions>
-      </Modal>
-      <Menu size='small' text vertical style={{ width: '100%' }}>
-        <Menu.Item onClick={handleOpen} name='search' active={false}>
-          {fragmentIcon(FiTerminal, 'Re-index search')}
-        </Menu.Item>
-        <Menu.Item onClick={handleOpen} name='families' active={false}>
-          {fragmentIcon(FiTerminal, 'Fix duplicate families')}
-        </Menu.Item>
-        <Menu.Item onClick={handleOpen} name='giving' active={false}>
-          {fragmentIcon(FiTerminal, 'Associate giving with pledges')}
-        </Menu.Item>
-        <Menu.Item onClick={handleOpen} name='date' active={false}>
-          {fragmentIcon(FiTerminal, 'Fix last attended date')}
-        </Menu.Item>
-        <Menu.Item onClick={handleOpen} name='duplicates' active={false}>
-          {fragmentIcon(FiTerminal, 'Find duplicates')}
-        </Menu.Item>
+      <ConfirmationModal
+        header="Run script"
+        description="Are you sure you want to run SCRIPT_NAME for CHURCH_NAME?"
+        open={visible}
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+        onClose={handleClose}
+      />
+      <Menu size="small" text vertical style={{ width: "100%" }}>
+        {options.map(option => (
+          <Menu.Item name={option.name} onClick={() => setVisible(true)}>
+            {fragmentIcon(FiTerminal, option.text)}
+          </Menu.Item>
+        ))}
       </Menu>
     </React.Fragment>
   );
