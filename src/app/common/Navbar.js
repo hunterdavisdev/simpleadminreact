@@ -8,36 +8,42 @@ const options = [
     route: '/',
     name: 'search',
     icon: FiSearch,
+    iconColor: '#fb6340',
     text: 'Search',
   },
   {
     route: '/tools',
     name: 'tools',
     icon: FiSliders,
+    iconColor: '#11cdef',
     text: 'Scripts',
   },
   {
     route: '/account',
     name: 'account',
     icon: FiFileText,
+    iconColor: '#5e72e4',
     text: 'Account',
   },
   {
     route: '/history',
     name: 'history',
     icon: FiRotateCcw,
+    iconColor: '#2dce89',
     text: 'History',
   },
   {
     route: '/contacts',
     name: 'contacts',
     icon: FiPhoneOutgoing,
+    iconColor: '#f5365c',
     text: 'Contacts',
   },
   {
     route: '/settings',
     name: 'settings',
     icon: FiSettings,
+    iconColor: '#697490',
     text: 'Settings',
   },
 ];
@@ -69,8 +75,8 @@ const Navbar = () => {
           active={activeItem === option.name}
           onClick={handleClick}
         >
-          <p style={menuItemStyle}>
-            <option.icon style={iconStyle} />
+          <p style={{ ...menuItemStyle, color: activeItem === option.name ? 'black' : '#697490' }}>
+            <option.icon style={{ ...iconStyle, color: option.iconColor }} />
             {option.text}
           </p>
         </Menu.Item>

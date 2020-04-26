@@ -1,61 +1,54 @@
-import React from "react";
-import { Accordion, Image } from "semantic-ui-react";
-import { FiChevronRight, FiChevronDown } from "react-icons/fi";
-import contacts from "./contacts";
+import React from 'react';
+import { Image, Card, Modal, Header, Button } from 'semantic-ui-react';
+import IconizedParagraph from '../common/IconizedParagraph';
+import { FiCopy, FiX } from 'react-icons/fi';
+import contacts from './contacts';
 
 const ContactsComponent = () => {
-  const [activeIndex, setActiveIndex] = React.useState(0);
+  const [departments, setDepartments] = React.useState([]);
+  const [visible, setVisibile] = React.useState(false);
 
-  const handleClick = (e, { index }) =>
-    setActiveIndex(activeIndex === index ? -1 : index);
+  const showModal = () => setVisibile(true);
+  const hideModal = () => setVisibile(false);
 
-  const iconStyle = {
-    marginRight: "8px"
+  const handleClick = (departments, e) => {
+    setDepartments(departments);
+    showModal();
   };
 
   return (
-    <Accordion>
-      {contacts.map((contact, index) => (
-        <>
-          <Accordion.Title index={index} onClick={handleClick}>
-            <p style={{ display: "flex", alignItems: "center" }}>
-              {activeIndex === index ? (
-                <FiChevronDown style={iconStyle} />
-              ) : (
-                <FiChevronRight style={iconStyle} />
-              )}
-              <Image
-                style={{
-                  width: "16px",
-                  height: "16px",
-                  marginRight: "10px"
-                }}
-                src={contact.icon}
-              />
-              {contact.name}
-            </p>
-          </Accordion.Title>
-          <Accordion.Content active={activeIndex === index}>
-            <Accordion.Accordion>
-              {contact.departments.map(department => (
-                <>
-                  <Accordion.Title
-                    onClick={() => alert("Text copied to clipboard")}
-                  >
-                    {department.name}
-                  </Accordion.Title>
-                  <Accordion.Content active={false}>
-                    <p> Email: {department.email}</p>
-                    <p> Phone #: {department.phone}</p>
-                  </Accordion.Content>
-                </>
-              ))}
-            </Accordion.Accordion>
-          </Accordion.Content>
-        </>
-      ))}
-    </Accordion>
+    <>
+      <Modal open={visible} size='mini' basic>
+        <Modal.Content>
+          {departments.map((department) => (
+            <>
+              <Header inverted as='h3'>
+                {department.name}
+              </Header>
+              <IconizedParagraph icon={<FiCopy />} text={department.email} />
+              <IconizedParagraph icon={<FiCopy />} text={department.phone} />
+            </>
+          ))}
+        </Modal.Content>
+        <Modal.Actions>
+          <Button color='red' onClick={hideModal} inverted>
+            <FiX /> Close
+          </Button>
+        </Modal.Actions>
+      </Modal>
+      <Card.Group itemsPerRow={3}>
+        {contacts.map((contact) => (
+          <Card
+            raised
+            fluid
+            style={{ padding: '1em', cursor: 'pointer' }}
+            onClick={(e) => handleClick(contact.departments)}
+          >
+            <Image src={contact.image} style={{ background: 'white' }} />
+          </Card>
+        ))}
+      </Card.Group>
+    </>
   );
 };
-
 export default ContactsComponent;

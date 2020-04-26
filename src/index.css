@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 html {
-  width: 600px;
-  height: 350px;
+  width: 750px;
+  height: 500px;
   font-family: 'Karla', sans-serif !important;
 }
 
@@ -16,8 +16,8 @@ html {
 }
 
 body {
-  width: 600px;
-  height: 350px;
+  width: 750px;
+  height: 500px;
   margin: 0;
   font-family: 'Karla', sans-serif !important;
   -webkit-font-smoothing: antialiased;

@@ -2,14 +2,8 @@ import React from 'react';
 import { Menu } from 'semantic-ui-react';
 import ConfirmationModal from '../common/ConfirmationModal';
 import { FiTerminal } from 'react-icons/fi';
+import IconizedParagraph from '../common/IconizedParagraph';
 import { reindexSearch, fixDuplicateFamilies, associateGiving, fixLastAttendedDate } from './scripts';
-
-const fragmentIcon = (FaIcon, title) => (
-  <p>
-    <FaIcon style={{ marginRight: '1em' }} />
-    {title}
-  </p>
-);
 
 const options = [
   {
@@ -56,7 +50,7 @@ const ToolsComponent = () => {
       <Menu size='small' text vertical style={{ width: '100%' }}>
         {options.map((option) => (
           <Menu.Item name={option.name} onClick={() => setVisible(true)}>
-            {fragmentIcon(FiTerminal, option.text)}
+            <IconizedParagraph icon={<FiTerminal />} text={option.text} />
           </Menu.Item>
         ))}
       </Menu>
