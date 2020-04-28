@@ -1,7 +1,8 @@
 /*global chrome*/
 import React from 'react';
-import { Dropdown, Container, Input, List, Button, Image, Label } from 'semantic-ui-react';
-import { FiEdit2 } from 'react-icons/fi';
+import { Dropdown, Container, Input, List, Image, Label } from 'semantic-ui-react';
+import { FiEdit2, FiHome, FiGlobe, FiAtSign, FiHash } from 'react-icons/fi';
+import IconizedParagrph from '../common/IconizedParagraph';
 
 const options = [
   { key: 'name', text: 'Name', value: 'name' },
@@ -87,28 +88,67 @@ const SearchComponent = () => {
     );
   }, []);
 
+  const filterStyle = { flexGrow: 1, margin: '5px', cursor: 'pointer' };
+
+  const filters = [
+    {
+      name: 'Name',
+      icon: <FiHome />,
+    },
+    {
+      name: 'Domain',
+      icon: <FiGlobe />,
+    },
+    {
+      name: 'Email',
+      icon: <FiAtSign />,
+    },
+    {
+      name: 'ID',
+      icon: <FiHash />,
+    },
+  ];
+
+  const [activeFilters, setFilters] = React.useState(['Name']);
+
+  const handleFilterClick = (e, { filter }) =>
+    activeFilters.includes(filter)
+      ? setFilters(activeFilters.filter((f) => f !== filter))
+      : setFilters([...activeFilters, filter]);
+
   return (
     <Container style={{ margin: '0' }}>
+      <div style={{ display: 'flex', padding: '15px' }}>
+        {filters.map((filter) => (
+          <Label
+            className={`search-filter ${activeFilters.includes(filter.name) ? 'active' : null}`}
+            style={filterStyle}
+            filter={filter.name}
+            onClick={handleFilterClick}
+          >
+            <IconizedParagrph icon={filter.icon} text={filter.name} />
+          </Label>
+        ))}
+      </div>
       <Input
         fluid
         size='small'
-        loading
         labelPosition='left'
         placeholder='Start typing'
         onChange={handleChange}
         value={payload.value}
-        label={
-          <Dropdown
-            size='small'
-            inverted
-            defaultValue='Name'
-            options={options}
-            value={payload.key}
-            onChange={handleDropdownChange}
-          />
-        }
+        // label={
+        //   <Dropdown
+        //     size='small'
+        //     inverted
+        //     defaultValue='Name'
+        //     options={options}
+        //     value={payload.key}
+        //     onChange={handleDropdownChange}
+        //   />
+        // }
       />
-      <List selection size='mini' style={{ height: '275px', overflowY: 'auto', padding: '1em' }}>
+      <List selection size='mini' style={{ height: '300px', overflowY: 'auto', padding: '1em' }}>
         {results.map((result) => (
           <List.Item>
             <List.Content floated='right'>

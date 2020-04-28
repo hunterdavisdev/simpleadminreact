@@ -19,31 +19,37 @@ const ContactsComponent = () => {
   return (
     <>
       <Modal open={visible} size='mini' basic>
+        <Modal.Actions>
+          <p onClick={hideModal} style={{ display: 'flex', alignItems: 'center' }}>
+            >
+            <FiX /> Close
+          </p>
+        </Modal.Actions>
         <Modal.Content>
           {departments.map((department) => (
             <>
               <Header inverted as='h3'>
                 {department.name}
               </Header>
-              <IconizedParagraph icon={<FiCopy />} text={department.email} />
-              <IconizedParagraph icon={<FiCopy />} text={department.phone} />
+              <IconizedParagraph
+                icon={<FiCopy />}
+                text={department.email}
+                style={{ cursor: 'pointer' }}
+                onClick={() => alert('Copied!')}
+              />
+              <IconizedParagraph
+                icon={<FiCopy />}
+                text={department.phone}
+                style={{ cursor: 'pointer' }}
+                onClick={() => alert('Copied!')}
+              />
             </>
           ))}
         </Modal.Content>
-        <Modal.Actions>
-          <Button color='red' onClick={hideModal} inverted>
-            <FiX /> Close
-          </Button>
-        </Modal.Actions>
       </Modal>
       <Card.Group itemsPerRow={3}>
         {contacts.map((contact) => (
-          <Card
-            raised
-            fluid
-            style={{ padding: '1em', cursor: 'pointer' }}
-            onClick={(e) => handleClick(contact.departments)}
-          >
+          <Card fluid style={{ padding: '1em', cursor: 'pointer' }} onClick={(e) => handleClick(contact.departments)}>
             <Image src={contact.image} style={{ background: 'white' }} />
           </Card>
         ))}

@@ -38,14 +38,14 @@ const ActiveUrlDisplay = () => {
 
   if (!url)
     return (
-      <Header inverted as='h4' style={urlStyle}>
+      <Header as='h4' style={urlStyle}>
         No active tab
         <FiAlertCircle style={iconStyle} />
       </Header>
     );
 
   return (
-    <Header inverted as='h4' style={urlStyle}>
+    <Header as='h4' style={urlStyle}>
       Active tab: {url}
       <FiCheck style={iconStyle} />
     </Header>
