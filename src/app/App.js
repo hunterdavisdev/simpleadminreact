@@ -22,7 +22,7 @@ const App = () => {
     <div className='App'>
       <Router>
         <Grid style={{ height: '100vh', margin: 0 }}>
-          <Grid.Row style={{ height: '18%', padding: 0, background: dashboardBgColor }}>
+          <Grid.Row style={{ height: '10%', padding: 0, background: dashboardBgColor }}>
             <Grid.Column width={4} style={{ ...columnHeaderStyle, borderTopRightRadius: '20px', background: 'white' }}>
               <Header as='h3' style={{ ...columnHeaderStyle, color: logoColor }}>
                 <AiOutlineApi style={{ width: '1.4em', height: '1.4em', marginRight: '0.3em' }} />
@@ -33,7 +33,7 @@ const App = () => {
               <ActiveUrlDisplay />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row style={{ height: '82%', padding: 0, background: dashboardBgColor }}>
+          <Grid.Row style={{ height: '90%', padding: 0, background: dashboardBgColor }}>
             <Grid.Column width={4} style={{ borderBottomRightRadius: '20px', background: 'white' }}>
               <Navbar style={{ paddingTop: '1.5em' }} />
             </Grid.Column>
