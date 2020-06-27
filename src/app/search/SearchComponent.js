@@ -1,6 +1,6 @@
 /*global chrome*/
 import React from 'react';
-import { Dropdown, Container, Input, List, Image, Header, Label } from 'semantic-ui-react';
+import { Dropdown, Container, Input, List, Image, Item, Header, Label } from 'semantic-ui-react';
 import { FiEdit2 } from 'react-icons/fi';
 import IconizedParagrph from '../common/IconizedParagraph';
 
@@ -92,7 +92,7 @@ const SearchComponent = () => {
     <Container style={{ margin: '0' }}>
       <Input
         fluid
-        size='small'
+        size='large'
         placeholder='Start typing'
         onChange={handleChange}
         value={payload.value}
@@ -109,9 +109,10 @@ const SearchComponent = () => {
         }
       />
       <Header as='h3' style={{ display: results.length <= 0 ? 'none' : null }}>
-        {results.length} accounts found with a {payload.key} of <span>'{payload.value ? payload.value : null}'</span>
+        {results.length === 100 ? 'Over 100' : results.length} accounts found with a {payload.key} of{' '}
+        <span>'{payload.value ? payload.value : null}'</span>
       </Header>
-      <List selection size='mini' style={{ height: '300px', overflowY: 'auto', padding: '1em' }}>
+      <List selection size='small' style={{ height: '300px', overflowY: 'auto', padding: '1em' }}>
         {results.map((result) => (
           <List.Item>
             <List.Content floated='right'>

@@ -62,7 +62,7 @@ const iconStyle = {
   marginRight: '0.5em',
 };
 
-const Navbar = () => {
+const Navbar = ({ inverted }) => {
   const [activeItem, setActiveItem] = React.useState('search');
   const handleClick = (e, { name }) => setActiveItem(name);
   return (
@@ -76,7 +76,7 @@ const Navbar = () => {
           onClick={handleClick}
         >
           <p style={{ ...menuItemStyle, color: activeItem === option.name ? 'black' : '#697490' }}>
-            <option.icon style={{ ...iconStyle, color: option.iconColor }} />
+            <option.icon style={{ ...iconStyle }} />
             {option.text}
           </p>
         </Menu.Item>

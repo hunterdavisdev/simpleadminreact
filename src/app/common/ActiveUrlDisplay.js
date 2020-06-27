@@ -1,6 +1,6 @@
 /*global chrome*/
 import React, { useState, useEffect } from 'react';
-import { Header } from 'semantic-ui-react';
+import { Header, Label } from 'semantic-ui-react';
 import { FiAlertCircle, FiCheck } from 'react-icons/fi';
 
 const ActiveUrlDisplay = () => {
@@ -44,12 +44,7 @@ const ActiveUrlDisplay = () => {
       </Header>
     );
 
-  return (
-    <Header as='h4' style={urlStyle}>
-      Active tab: {url}
-      <FiCheck style={iconStyle} />
-    </Header>
-  );
+  return <Label style={{ width: '100%' }}>{url}</Label>;
 };
 
 export default ActiveUrlDisplay;

@@ -65,7 +65,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       type: MESSAGE_RESULTS,
       payload: {
         results: evalQuery(request.payload)
-          .slice(0, 20)
+          .slice(0, 100)
           .sort((a, b) => a.icon.localeCompare(b.icon)),
       },
     });
