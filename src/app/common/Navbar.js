@@ -59,7 +59,7 @@ const menuItemStyle = {
 };
 
 const iconStyle = {
-  marginRight: '0.5em',
+  marginRight: '1em',
 };
 
 const Navbar = ({ inverted }) => {
@@ -74,8 +74,12 @@ const Navbar = ({ inverted }) => {
           name={option.name}
           active={activeItem === option.name}
           onClick={handleClick}
+          style={{
+            background: activeItem === option.name ? '#01b075' : null,
+            boxShadow: activeItem === option.name ? 'rgb(1, 173, 115) 0px 0px 20px' : null,
+          }}
         >
-          <p style={{ ...menuItemStyle, color: activeItem === option.name ? 'black' : '#697490' }}>
+          <p style={{ ...menuItemStyle, color: 'white' }}>
             <option.icon style={{ ...iconStyle }} />
             {option.text}
           </p>

@@ -3,7 +3,13 @@ import { Menu } from 'semantic-ui-react';
 import ConfirmationModal from '../common/ConfirmationModal';
 import { FiTerminal } from 'react-icons/fi';
 import IconizedParagraph from '../common/IconizedParagraph';
-import { reindexSearch, fixDuplicateFamilies, associateGiving, fixLastAttendedDate } from './scripts';
+import {
+  reindexSearch,
+  fixDuplicateFamilies,
+  associateGiving,
+  fixLastAttendedDate,
+  updateLastActivity,
+} from './scripts';
 
 const options = [
   {
@@ -26,6 +32,11 @@ const options = [
     text: 'Fix last attended date',
     script: fixLastAttendedDate,
   },
+  {
+    name: 'activity',
+    text: 'Fix last activity date',
+    script: updateLastActivity,
+  },
 ];
 
 const ToolsComponent = () => {
@@ -47,7 +58,7 @@ const ToolsComponent = () => {
         onCancel={handleCancel}
         onClose={handleClose}
       />
-      <Menu size='small' text vertical style={{ width: '100%' }}>
+      <Menu size='small' secondary vertical style={{ width: '100%' }}>
         {options.map((option) => (
           <Menu.Item name={option.name} onClick={() => setVisible(true)}>
             <IconizedParagraph icon={<FiTerminal />} text={option.text} />

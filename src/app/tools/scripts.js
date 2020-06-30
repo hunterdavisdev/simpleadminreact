@@ -40,3 +40,12 @@ export const fixLastAttendedDate = async (accountUrl) => {
     console.error(err.message);
   }
 };
+
+export const updateLastActivity = async (accountUrl) => {
+  try {
+    await axios.get(`${accountUrl}/utilities/update_last_activity_date`);
+    alert('Done!');
+  } catch (err) {
+    console.error(err.message);
+  }
+};

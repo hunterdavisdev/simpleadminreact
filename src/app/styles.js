@@ -1,8 +1,8 @@
 /** colors */
 export const colors = {
-  dashboardBgColor: '#f1f3f9',
+  dashboardBgColor: '#16171b',
   // navBgColor: '#4d20ff',
-  navBgColor: 'white',
+  navBgColor: '#202125',
   logoColor: '#6772e5',
 };
 

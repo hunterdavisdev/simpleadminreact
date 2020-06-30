@@ -44,7 +44,11 @@ const ActiveUrlDisplay = () => {
       </Header>
     );
 
-  return <Label style={{ width: '100%' }}>{url}</Label>;
+  return (
+    <Label large style={{ width: '100%' }}>
+      {url}
+    </Label>
+  );
 };
 
 export default ActiveUrlDisplay;

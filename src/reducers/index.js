@@ -1,3 +1,4 @@
-import { combineReducers } from "redux";
+import tabReducer from './tab';
+import { combineReducers } from 'redux';
 
-export default combineReducers(null);
+export default combineReducers([tabReducer]);
