@@ -1,7 +1,8 @@
 import React from 'react';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Header } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { FiSearch, FiSliders, FiFileText, FiRotateCcw, FiSettings, FiPhoneOutgoing } from 'react-icons/fi';
+import { colors } from '../styles';
 
 const options = [
   {
@@ -58,10 +59,6 @@ const menuItemStyle = {
   alignItems: 'center',
 };
 
-const iconStyle = {
-  marginRight: '1em',
-};
-
 const Navbar = ({ inverted }) => {
   const [activeItem, setActiveItem] = React.useState('search');
   const handleClick = (e, { name }) => setActiveItem(name);
@@ -75,14 +72,13 @@ const Navbar = ({ inverted }) => {
           active={activeItem === option.name}
           onClick={handleClick}
           style={{
-            background: activeItem === option.name ? '#01b075' : null,
-            boxShadow: activeItem === option.name ? 'rgb(1, 173, 115) 0px 0px 20px' : null,
+            textAlign: 'center',
+            color: activeItem === option.name ? 'white' : null,
+            background: activeItem === option.name ? colors.primary : null,
+            boxShadow: activeItem === option.name ? `${colors.primary} 0px 0px 20px` : null,
           }}
         >
-          <p style={{ ...menuItemStyle, color: 'white' }}>
-            <option.icon style={{ ...iconStyle }} />
-            {option.text}
-          </p>
+          <option.icon style={{ color: activeItem === option.name ? colors.iconActive : colors.iconInactive }} />
         </Menu.Item>
       ))}
     </Menu>

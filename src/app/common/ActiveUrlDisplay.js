@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Header, Label } from 'semantic-ui-react';
 import { FiAlertCircle, FiCheck } from 'react-icons/fi';
+import { colors } from '../styles';
 
 const ActiveUrlDisplay = () => {
   /** Initial state for this component that represents the url of the
@@ -45,7 +46,15 @@ const ActiveUrlDisplay = () => {
     );
 
   return (
-    <Label large style={{ width: '100%' }}>
+    <Label
+      size='large'
+      style={{
+        width: '100%',
+        color: colors.iconInactive,
+        background: colors.bg,
+        boxShadow: '4px 4px 8px #d1d0d5, -4px -4px 8px #ffffff',
+      }}
+    >
       {url}
     </Label>
   );

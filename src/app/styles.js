@@ -1,17 +1,20 @@
 /** colors */
 export const colors = {
-  dashboardBgColor: '#16171b',
-  // navBgColor: '#4d20ff',
-  navBgColor: '#202125',
-  logoColor: '#6772e5',
+  black: '#16171b',
+  gray: '#202125',
+  bg: '#f6f5fb',
+  nav: '#ffffff',
+  iconInactive: 'rgb(100, 100, 100)',
+  iconActive: '#ffffff',
+  primary: 'rgb(25, 236, 119)',
 };
 
 /** magic numbers */
 export const constants = {
-  leftColCount: 4,
-  rightColCount: 12,
-  topRowHeight: '10%',
-  botRowHeight: '90%',
+  leftColCount: 2,
+  rightColCount: 14,
+  topRowHeight: '15%',
+  botRowHeight: '85%',
   contentBuffer: '1.5em',
   logoSize: '1.4em',
   logoSpacing: '0.3em',
@@ -35,7 +38,7 @@ export const styles = {
   },
   rowStyle: {
     padding: 0,
-    background: colors.dashboardBgColor,
+    background: colors.bg,
   },
   colStyle: {},
 };

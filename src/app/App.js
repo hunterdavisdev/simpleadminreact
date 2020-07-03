@@ -20,30 +20,20 @@ const App = () => {
       <Router>
         <Grid style={styles.gridStyle}>
           <Grid.Row style={{ ...styles.rowStyle, height: constants.topRowHeight }}>
-            <Grid.Column
-              width={constants.leftColCount}
-              style={{ ...styles.columnHeaderStyle, borderTopRightRadius: '20px', background: colors.navBgColor }}
-            >
-              <Header as='h3' style={{ ...styles.columnHeaderStyle, color: colors.logoColor }}>
-                <AiOutlineApi style={styles.logoStyle} />
-                EasyAdmin
-              </Header>
+            <Grid.Column width={constants.leftColCount} style={{ ...styles.columnHeaderStyle, background: colors.nav }}>
+              <div className='brand-header' style={{ width: '100%' }}>
+                <Header as='h1'>SA</Header>
+              </div>
             </Grid.Column>
-            <Grid.Column
-              width={constants.rightColCount}
-              style={{ ...styles.columnHeaderStyle, background: colors.dashboardBgColor }}
-            >
+            <Grid.Column width={constants.rightColCount} style={{ ...styles.columnHeaderStyle, background: colors.bg }}>
               <ActiveUrlDisplay />
             </Grid.Column>
           </Grid.Row>
           <Grid.Row style={{ ...styles.rowStyle, height: constants.botRowHeight }}>
-            <Grid.Column
-              width={constants.leftColCount}
-              style={{ borderBottomRightRadius: '20px', background: colors.navBgColor }}
-            >
+            <Grid.Column width={constants.leftColCount} style={{ background: colors.nav }}>
               <Navbar style={{ paddingTop: constants.contentBuffer }} />
             </Grid.Column>
-            <Grid.Column width={constants.rightColCount} style={{ background: colors.dashboardBgColor }}>
+            <Grid.Column width={constants.rightColCount} style={{ background: colors.bg }}>
               <div style={{ paddingTop: constants.contentBuffer }}>
                 <Switch>
                   <Route path='/tools' component={Tools} />

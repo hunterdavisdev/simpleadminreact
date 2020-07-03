@@ -58,7 +58,7 @@ const ToolsComponent = () => {
         onCancel={handleCancel}
         onClose={handleClose}
       />
-      <Menu size='small' secondary vertical style={{ width: '100%' }}>
+      <Menu size='small' secondary inverted vertical style={{ width: '100%' }}>
         {options.map((option) => (
           <Menu.Item name={option.name} onClick={() => setVisible(true)}>
             <IconizedParagraph icon={<FiTerminal />} text={option.text} />

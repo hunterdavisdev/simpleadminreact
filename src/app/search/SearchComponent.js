@@ -1,8 +1,8 @@
 /*global chrome*/
 import React from 'react';
-import { Dropdown, Container, Input, List, Image, Item, Header, Label } from 'semantic-ui-react';
-import { FiEdit2 } from 'react-icons/fi';
-import IconizedParagrph from '../common/IconizedParagraph';
+import { Container, Input, List, Image, Header, Label, Segment } from 'semantic-ui-react';
+import { FiEdit2, FiSquare } from 'react-icons/fi';
+import { colors } from '../styles';
 
 const options = [
   { key: 'name', text: 'Name', value: 'name' },
@@ -39,10 +39,10 @@ const SearchComponent = () => {
     );
   };
 
-  const handleDropdownChange = (e) => {
+  const handleKeyChange = (e) => {
     console.log(e);
     setPayload({
-      key: e.target.key,
+      key: e.target.value,
       ...payload,
     });
   };
@@ -90,24 +90,32 @@ const SearchComponent = () => {
 
   return (
     <Container style={{ margin: '0' }}>
-      <Input
-        fluid
-        size='large'
-        placeholder='Start typing'
-        onChange={handleChange}
-        value={payload.value}
-        action={
-          <Dropdown
-            button
-            basic
-            floating
-            defaultValue='Name'
-            options={options}
-            value={payload.key}
-            onChange={handleDropdownChange}
-          />
-        }
-      />
+      <div>
+        <Input fluid size='large' placeholder='Start typing' onChange={handleChange} value={payload.value} />
+        {/* <Dropdown
+          button
+          basic
+          floating
+          defaultValue='Name'
+          options={options}
+          value={payload.key}
+          onChange={handleDropdownChange}
+        /> */}
+        <div>
+          {/* <Segment.Group small horizontal compact style={{ textAlign: 'center' }}> */}
+          {options.map((option) => (
+            <Segment
+              circular
+              value={option.key}
+              onClick={{ handleKeyChange }}
+              style={{ width: 40, height: 40, cursor: 'pointer' }}
+            >
+              {option.text}
+            </Segment>
+          ))}
+          {/* </Segment.Group> */}
+        </div>
+      </div>
       <Header as='h3' style={{ display: results.length <= 0 ? 'none' : null }}>
         {results.length === 100 ? 'Over 100' : results.length} accounts found with a {payload.key} of{' '}
         <span>'{payload.value ? payload.value : null}'</span>
