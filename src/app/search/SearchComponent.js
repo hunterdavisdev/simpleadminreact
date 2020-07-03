@@ -4,25 +4,25 @@ import { Container, Input, List, Image, Header, Label, Segment } from 'semantic-
 import { FiEdit2, FiSquare } from 'react-icons/fi';
 import { colors } from '../styles';
 
+/** Search key parameters */
 const options = [
   { key: 'name', text: 'Name', value: 'name' },
   { key: 'id', text: 'ID', value: 'id' },
   { key: 'email', text: 'Email', value: 'email' },
   { key: 'domain', text: 'Domain', value: 'domain' },
 ];
+
 const SearchComponent = () => {
-  const [payload, setPayload] = React.useState({
-    key: 'name',
-    value: '',
-  });
+  const [payload, setPayload] = React.useState({ key: 'name', value: '' });
   const [results, setResults] = React.useState([]);
   const [activeTab, setActiveTab] = React.useState(null);
 
-  const handleChange = (e) => {
+  const handleChange = (e, { value }) => {
     setPayload({
       ...payload,
-      value: e.target.value,
+      value,
     });
+    console.log(payload);
     chrome.tabs.sendMessage(
       activeTab,
       {
@@ -39,13 +39,8 @@ const SearchComponent = () => {
     );
   };
 
-  const handleKeyChange = (e) => {
-    console.log(e);
-    setPayload({
-      key: e.target.value,
-      ...payload,
-    });
-  };
+  /** Handles the click event on each key option and re-assigns the key for searching */
+  const handleKeyChange = (key) => setPayload({ ...payload, key });
 
   const handleImageClick = ({ name, url, icon }) => {
     chrome.storage.local.get({ sa_history: [] }, (result) => {
@@ -73,48 +68,42 @@ const SearchComponent = () => {
   };
 
   React.useEffect(() => {
-    chrome.tabs.query(
-      {
-        url: ['*://admin.simplechurchcrm.com/', '*://admin.simplechurchcrm.com/main/*'],
-      },
-      (tabs) => {
-        if (!checkLastRuntimeError()) {
-          if (tabs && tabs.length > 0) {
-            setActiveTab(tabs[0].id);
-            console.log(activeTab);
+    if (process.env.NODE_ENV === 'production') {
+      chrome.tabs.query(
+        {
+          url: ['*://admin.simplechurchcrm.com/', '*://admin.simplechurchcrm.com/main/*'],
+        },
+        (tabs) => {
+          if (!checkLastRuntimeError()) {
+            if (tabs && tabs.length > 0) {
+              setActiveTab(tabs[0].id);
+              console.log(activeTab);
+            }
           }
         }
-      }
-    );
+      );
+    } else {
+      setActiveTab('DEVELOPMENT_BUILD');
+    }
   }, []);
 
   return (
     <Container style={{ margin: '0' }}>
       <div>
-        <Input fluid size='large' placeholder='Start typing' onChange={handleChange} value={payload.value} />
-        {/* <Dropdown
-          button
-          basic
-          floating
-          defaultValue='Name'
-          options={options}
-          value={payload.key}
-          onChange={handleDropdownChange}
-        /> */}
         <div>
-          {/* <Segment.Group small horizontal compact style={{ textAlign: 'center' }}> */}
-          {options.map((option) => (
-            <Segment
-              circular
-              value={option.key}
-              onClick={{ handleKeyChange }}
-              style={{ width: 40, height: 40, cursor: 'pointer' }}
-            >
-              {option.text}
-            </Segment>
-          ))}
-          {/* </Segment.Group> */}
+          <Segment.Group small horizontal compact style={{ textAlign: 'center' }}>
+            {options.map((option) => (
+              <Segment
+                value={option.key}
+                onClick={() => handleKeyChange(option.key)}
+                style={{ cursor: 'pointer', background: payload.key === option.key ? colors.primary : null }}
+              >
+                {option.text}
+              </Segment>
+            ))}
+          </Segment.Group>
         </div>
+        <Input fluid size='large' placeholder='Start typing' onChange={handleChange} value={payload.value} />
       </div>
       <Header as='h3' style={{ display: results.length <= 0 ? 'none' : null }}>
         {results.length === 100 ? 'Over 100' : results.length} accounts found with a {payload.key} of{' '}

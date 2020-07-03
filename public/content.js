@@ -5,12 +5,16 @@ const MESSAGE_RESULTS = 'MESSAGE_RESULTS';
 const evalQuery = ({ key, value }) => {
   switch (key) {
     case 'id':
+      console.log('searching by id');
       return findChurchById(Number(value));
     case 'domain':
+      console.log('searching by domain');
       return findChurchByDomain(value.toLowerCase());
     case 'name':
+      console.log('searching by name');
       return findChurchesByName(value.toLowerCase());
-    case 'email:':
+    case 'email':
+      console.log('searching by email');
       return findChurchesByEmail(value.toLowerCase());
     default:
       return [];
