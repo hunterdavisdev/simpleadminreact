@@ -1,67 +1,98 @@
-// import React from 'react';
-// import { Image, Card, Modal, Header, Button } from 'semantic-ui-react';
-// import IconizedParagraph from '../common/IconizedParagraph';
-// import { FiCopy, FiX } from 'react-icons/fi';
-// import contacts from './contacts';
+import React from 'react';
+import { Message, Input, Button, List } from 'semantic-ui-react';
+import { FiMail, FiPhoneCall, FiCheck } from 'react-icons/fi';
+import contacts from './contacts';
 
-import React, { useState } from 'react';
-import { Search, Grid, Header, Segment } from 'semantic-ui-react';
+const ContactsComponent = () => {
+  const [value, setValue] = React.useState('');
 
-const [isLoading, setLoading] = React.useState(false);
-const [results, setResults] = React.useState([]);
-const [value, setValue] = React.useState('');
+  const divStyle = {
+    height: 400,
+  };
 
-// const ContactsComponent = () => {
-//   const [departments, setDepartments] = React.useState([]);
-//   const [visible, setVisibile] = React.useState(false);
+  const listStyle = {
+    height: '100%',
+    overflowY: 'scroll',
+    padding: '1em',
+  };
 
-//   const showModal = () => setVisibile(true);
-//   const hideModal = () => setVisibile(false);
+  const inputStyle = {
+    marginBottom: '0.5em',
+    border: 0,
+    background: '#f6f5fb',
+    boxShadow: '4px 4px 7px #d1d0d5, -4px -4px 7px #ffffff',
+  };
 
-//   const handleClick = (departments, e) => {
-//     setDepartments(departments);
-//     showModal();
-//   };
+  const handleSearchChange = (e, { value }) => setValue(value);
+  const limitContacts = (query) => (element) => element.name.toLowerCase().includes(query.toLowerCase());
 
-//   return (
-//     <>
-//       <Modal open={visible} size='mini' basic>
-//         <Modal.Actions>
-//           <p onClick={hideModal} style={{ display: 'flex', alignItems: 'center' }}>
-//             >
-//             <FiX /> Close
-//           </p>
-//         </Modal.Actions>
-//         <Modal.Content>
-//           {departments.map((department) => (
-//             <>
-//               <Header inverted as='h3'>
-//                 {department.name}
-//               </Header>
-//               <IconizedParagraph
-//                 icon={<FiCopy />}
-//                 text={department.email}
-//                 style={{ cursor: 'pointer' }}
-//                 onClick={() => alert('Copied!')}
-//               />
-//               <IconizedParagraph
-//                 icon={<FiCopy />}
-//                 text={department.phone}
-//                 style={{ cursor: 'pointer' }}
-//                 onClick={() => alert('Copied!')}
-//               />
-//             </>
-//           ))}
-//         </Modal.Content>
-//       </Modal>
-//       <Card.Group itemsPerRow={3}>
-//         {contacts.map((contact) => (
-//           <Card fluid style={{ padding: '1em', cursor: 'pointer' }} onClick={(e) => handleClick(contact.departments)}>
-//             <Image src={contact.image} style={{ background: 'white' }} />
-//           </Card>
-//         ))}
-//       </Card.Group>
-//     </>
-//   );
-// };
+  const CopyContactButton = ({ copyText, color, ...rest }) => {
+    const initialState = {
+      loading: false,
+      success: false,
+    };
+
+    const buttonStyle = {
+      margin: '0.5em',
+      background: '#f6f5fb',
+      boxShadow: '4px 4px 7px #d1d0d5, -4px -4px 7px #ffffff',
+    };
+
+    const [iconState, setIconState] = React.useState(initialState);
+
+    const handleClick = (e, { value }) => {
+      navigator.clipboard.writeText(value);
+      setIconState({ ...iconState, loading: true });
+      setTimeout(() => {
+        setIconState({ loading: false, success: true });
+        setTimeout(() => {
+          setIconState({ loading: false, success: false });
+        }, 1200);
+      }, 400);
+    };
+
+    return (
+      <Button loading={iconState.loading} value={copyText} onClick={handleClick} {...rest} style={buttonStyle}>
+        {iconState.success ? <FiCheck style={{ color: iconState.success ? 'green' : null }} /> : rest.children}
+      </Button>
+    );
+  };
+
+  return (
+    <div style={divStyle}>
+      {/* <Message>{copySuccess}</Message> */}
+      <Input
+        size='large'
+        fluid
+        placeholder='Start typing...'
+        style={inputStyle}
+        onChange={handleSearchChange}
+        value={value}
+      />
+      <List relaxed style={listStyle}>
+        {contacts.filter(limitContacts(value)).map((contact, index) => (
+          <React.Fragment>
+            {contact.departments.map((department, index) => (
+              <>
+                <List.Item>
+                  <List.Content floated='right'>
+                    <CopyContactButton copyText={department.email}>
+                      <FiMail />
+                    </CopyContactButton>
+                    <CopyContactButton copyText={department.phone}>
+                      <FiPhoneCall />
+                    </CopyContactButton>
+                  </List.Content>
+                  <List.Content>
+                    {contact.name} {department.name}
+                  </List.Content>
+                </List.Item>
+              </>
+            ))}
+          </React.Fragment>
+        ))}
+      </List>
+    </div>
+  );
+};
 export default ContactsComponent;
